@@ -290,5 +290,41 @@ namespace GildedRoseCsharpTests
             gildedRose.UpdateQuality();
             items[0].SellIn.Should().Be(5);
         }
+
+        [Fact]
+        public void Test_conjured_quality()
+        {
+            var items = new[]
+            {
+                new Item()
+                {
+                    Name = "Conjured Mana Cake",
+                    SellIn = 6,
+                    Quality = 2
+                }
+            };
+
+            var gildedRose = new GildedRose(items);
+            gildedRose.UpdateQuality();
+            items[0].SellIn.Should().Be(0);
+        }
+
+        [Fact]
+        public void Test_conjured_sell_in()
+        {
+            var items = new[]
+            {
+                new Item()
+                {
+                    Name = "Conjured Mana Cake",
+                    SellIn = 6,
+                    Quality = 40
+                }
+            };
+
+            var gildedRose = new GildedRose(items);
+            gildedRose.UpdateQuality();
+            items[0].SellIn.Should().Be(5);
+        }
     }
 }
