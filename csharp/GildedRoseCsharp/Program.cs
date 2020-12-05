@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace csharp
+namespace GildedRoseCsharp
 {
     public class Program
     {
@@ -38,7 +38,6 @@ namespace csharp
             };
 
             var app = new GildedRose(Items);
-
 
             for (var i = 0; i < 31; i++)
             {

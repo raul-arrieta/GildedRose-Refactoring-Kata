@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace csharp
+namespace GildedRoseCsharp
 {
     public class GildedRose
     {
-        IList<Item> Items;
+        private IList<Item> Items;
+
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
