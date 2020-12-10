@@ -24,6 +24,7 @@ class Item:
 
 
 class AgedBrieItem(Item):
+    NAME = "Aged Brie"
     def get_updated_quality(self):
         if self.sell_in < 0 & self.quality < 49:
             self.quality += 2
@@ -37,6 +38,8 @@ class AgedBrieItem(Item):
 
 
 class BackstagePassItem(Item):
+    NAME = "Backstage passes to a TAFKAL80ETC concert"
+
     def get_updated_quality(self):
         quality = self.quality + 1
         if self.sell_in < 0:
@@ -54,6 +57,8 @@ class BackstagePassItem(Item):
 
 
 class SulfurasItem(Item):
+    NAME = "Sulfuras, Hand of Ragnaros"
+
     def get_updated_quality(self):
         return self.quality
 
@@ -77,9 +82,9 @@ class RegularItem(Item):
 
 class ItemFactory:
     allowedItems = {
-        "Backstage passes to a TAFKAL80ETC concert": BackstagePassItem,
-        "Aged Brie": AgedBrieItem,
-        "Sulfuras, Hand of Ragnaros": SulfurasItem,
+        BackstagePassItem.NAME: BackstagePassItem,
+        AgedBrieItem.NAME: AgedBrieItem,
+        SulfurasItem.NAME: SulfurasItem,
     }
 
     def cast_item(self, item):
