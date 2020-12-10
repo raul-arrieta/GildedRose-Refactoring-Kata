@@ -15,10 +15,14 @@ class GildedRose(object):
         return item.name == SULFURAS
 
     def get_updated_quality_for_backstage_pass(self, item):
+        item.sell_in = self.get_updated_sell_in(item)
+
         quality = item.quality + 1
-        if item.sell_in < 6:
+        if item.sell_in < 0:
+            quality = 0
+        elif item.sell_in < 5:
             quality += 2
-        elif item.sell_in < 11:
+        elif item.sell_in < 10:
             quality += 1
                         
         return min([50, quality])
@@ -57,18 +61,14 @@ class GildedRose(object):
                 item.quality = self.get_updated_quality_regular_item(item)
 
 
-            if self.is_aged_brie(item):
+            if self.is_aged_brie(item) | self.is_backstage_pass(item):
                 continue
 
             item.sell_in = self.get_updated_sell_in(item)
             
 
             if item.sell_in < 0:
-                
-                if self.is_backstage_pass(item):
-                    item.quality = 0  
-                    continue
-                
+                              
                 if item.quality > 0:
                     if not self.is_sulfuras(item):
                         item.quality = item.quality - 1
