@@ -24,7 +24,14 @@ class GildedRose(object):
         return min([50, quality])
 
     def get_updated_quality_for_aged_brie(self, item):
-        return min([50, item.quality + 1])
+        item.sell_in = self.get_updated_sell_in(item)
+
+        if item.sell_in < 0 & item.quality < 49:
+            item.quality += 2
+        else:
+            item.quality += 1
+            
+        return min([50, item.quality])
 
     def get_updated_quality_regular_item(self, item):
         return max([0, item.quality - 1])
@@ -39,21 +46,25 @@ class GildedRose(object):
         for item in self.items:
             if self.is_aged_brie(item):
                 item.quality = self.get_updated_quality_for_aged_brie(item)
+
             elif self.is_backstage_pass(item):
                 item.quality = self.get_updated_quality_for_backstage_pass(item)
+
             elif self.is_sulfuras(item):
                 pass
+
             else:
                 item.quality = self.get_updated_quality_regular_item(item)
 
+
+            if self.is_aged_brie(item):
+                continue
+
             item.sell_in = self.get_updated_sell_in(item)
+            
 
             if item.sell_in < 0:
-                if self.is_aged_brie(item):
-                    if item.quality < 50:
-                        item.quality += 1
-                    continue
-
+                
                 if self.is_backstage_pass(item):
                     item.quality = 0  
                     continue
