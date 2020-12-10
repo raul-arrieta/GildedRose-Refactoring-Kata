@@ -18,20 +18,14 @@ class GildedRose(object):
 
         return RegularItem(item.name, item.sell_in, item.quality)
 
-    def is_sulfuras(self, item):
-        return item.name == SULFURAS
-
-    def get_updated_sell_in(self, item):
-        return item.sell_in if self.is_sulfuras(item) else item.sell_in - 1
-
     def __init__(self, items):
         self.items = items
 
     def update_quality(self):
         for item in self.items:
-            item.sell_in = self.get_updated_sell_in(item)
-
-            item.quality = self.item_factory(item).get_updated_quality()
+            casted_item = self.item_factory(item)
+            item.sell_in = casted_item.get_updated_sellin()
+            item.quality = casted_item.get_updated_quality()
 
 
 class Item:
@@ -51,6 +45,9 @@ class AgedBrieItem(Item):
             self.quality += 1
 
         return min([50, self.quality])
+    
+    def get_updated_sellin(self):
+        return self.sell_in - 1
 
 class BackstagePassItem(Item):
     def get_updated_quality(self):
@@ -63,10 +60,17 @@ class BackstagePassItem(Item):
             quality += 1
 
         return min([50, quality])
+    
+    def get_updated_sellin(self):
+        self.sell_in -= 1
+        return self.sell_in
 
 class SulfurasItem(Item):
     def get_updated_quality(self):
         return self.quality
+    
+    def get_updated_sellin(self):
+        return self.sell_in
 
 class RegularItem(Item):
 
@@ -76,3 +80,7 @@ class RegularItem(Item):
         else:
             self.quality -= 1
         return max([0, self.quality])
+    
+    def get_updated_sellin(self):
+        self.sell_in -= 1
+        return self.sell_in
